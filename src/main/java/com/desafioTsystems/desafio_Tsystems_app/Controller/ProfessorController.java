@@ -13,6 +13,8 @@ import com.desafioTsystems.desafio_Tsystems_app.Service.AddressService;
 import com.desafioTsystems.desafio_Tsystems_app.Service.ProfessorService;
 import com.desafioTsystems.desafio_Tsystems_app.Service.StudentService;
 import com.desafioTsystems.desafio_Tsystems_app.dto.CadastrarRequestDTO;
+import com.desafioTsystems.desafio_Tsystems_app.dto.EditarRequestDTO;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -29,6 +31,32 @@ public class ProfessorController {
     public ResponseEntity<?> getAllProfessores() {
         Iterable<Professor> professores = this.professorService.getAllProfessores();
         return ResponseEntity.ok(professores);
+    }
+
+    @PostMapping("/editar")
+    public ResponseEntity<String> editarPost(@RequestBody EditarRequestDTO body) {
+        Optional<Professor> professor = this.professorService.findProfessor(body.email());
+
+        if (professor.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Usuário não existe");
+        } else {
+            professorService.editProfessor(
+                professor.get(),
+                body.nome(),
+                body.numero(),
+                body.email(),
+                body.rua(),
+                body.cidade(),
+                body.estado(),
+                body.cep(),
+                body.pais(),
+                body.salario()
+            );
+            
+            return ResponseEntity.ok("Usuário atualizado!");
+        }
     }
 
     @SuppressWarnings("rawtypes")

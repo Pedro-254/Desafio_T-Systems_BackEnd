@@ -19,6 +19,39 @@ public class ProfessorService {
         return professorRepository.save(professor);
     }
 
+    public void editProfessor(Professor professor, String nome, String numero, String email, String rua, String cidade, String estado, String cep, String pais, String salario) {
+
+        if (nome != null) {
+            professor.setNome(nome);
+        }
+        if (numero != null) {
+            professor.setNumero(numero);
+        }
+        if (email != null) {
+            professor.setEmail(email);
+        }
+        if (rua != null) {
+            professor.getAddress().setRua(rua);
+        }
+        if (cidade != null) {
+            professor.getAddress().setCidade(cidade);
+        }
+        if (estado != null) {
+            professor.getAddress().setEstado(estado);
+        }
+        if (cep != null) {
+            professor.getAddress().setCep(cep);
+        }
+        if (pais != null) {
+            professor.getAddress().setPais(pais);
+        }
+        if (salario != null) {
+            professor.setSalary(Float.parseFloat(salario));
+        }
+
+        saveProfessor(professor);
+    }
+
     public Professor createProfessor(String email, String nome, String numero, Address address){
         Float salarioPadrao = 1000f;
 

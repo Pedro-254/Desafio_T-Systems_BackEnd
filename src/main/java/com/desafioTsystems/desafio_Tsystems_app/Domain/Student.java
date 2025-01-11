@@ -12,16 +12,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Student extends Person{
-    private Integer StudentNumber;
-    private Float AvarageMark;
-    private Integer NumberOfSeminars;
+    private Integer NumeroEstudante;
+    private Float Media;
+    private Integer NumeroSeminarios;
 
     public boolean isEligibleToEnroll() {
-        return this.AvarageMark >= 50.0;
+        return this.Media >= 50.0;
     }
 
     public Integer getSeminarsTaken() {
         // Lógica para buscar seminários
-        return NumberOfSeminars;
+        return NumeroSeminarios;
     }
 }

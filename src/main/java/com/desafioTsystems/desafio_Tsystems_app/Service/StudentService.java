@@ -31,6 +31,42 @@ public class StudentService {
         return student;
     }
 
+    public void editStudent(Student student, String nome, String numero, String email, String seminarios, String media, String rua, String cidade, String estado, String cep, String pais) {
+
+        if (nome != null) {
+            student.setNome(nome);
+        }
+        if (numero != null) {
+            student.setNumero(numero);
+        }
+        if (email != null) {
+            student.setEmail(email);
+        }
+        if (seminarios != null) {
+            student.setNumeroSeminarios(Integer.parseInt(seminarios));
+        }
+        if (media != null) {
+            student.setMedia(Float.parseFloat(media));
+        }
+        if (rua != null) {
+            student.getAddress().setRua(rua);
+        }
+        if (cidade != null) {
+            student.getAddress().setCidade(cidade);
+        }
+        if (estado != null) {
+            student.getAddress().setEstado(estado);
+        }
+        if (cep != null) {
+            student.getAddress().setCep(cep);
+        }
+        if (pais != null) {
+            student.getAddress().setPais(pais);
+        }
+
+        saveStudent(student);
+    }
+
     public void deleteStudent(Student student) {
         studentRepository.delete(student);
     }

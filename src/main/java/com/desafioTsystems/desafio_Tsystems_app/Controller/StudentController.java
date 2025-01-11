@@ -14,6 +14,8 @@ import com.desafioTsystems.desafio_Tsystems_app.Service.ProfessorService;
 import com.desafioTsystems.desafio_Tsystems_app.Service.StudentService;
 import com.desafioTsystems.desafio_Tsystems_app.dto.CadastrarRequestDTO;
 import com.desafioTsystems.desafio_Tsystems_app.dto.DeletarRequestDTO;
+import com.desafioTsystems.desafio_Tsystems_app.dto.EditarRequestDTO;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -66,6 +68,33 @@ public class StudentController {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Usuário já existente");
+    }
+
+    @PostMapping("/editar")
+    public ResponseEntity<String> editarPost(@RequestBody EditarRequestDTO body) {
+        Optional<Student> student = this.studentService.findStudent(body.email());
+
+        if (student.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Usuário não existe");
+        } else {
+            studentService.editStudent(
+                student.get(),
+                body.nome(),
+                body.numero(),
+                body.email(),
+                body.numeroSeminarios(),
+                body.media(),
+                body.rua(),
+                body.cidade(),
+                body.estado(),
+                body.cep(),
+                body.pais()
+            );
+            
+            return ResponseEntity.ok("Usuário atualizado!");
+        }
     }
 
     @PostMapping("/deletar")
