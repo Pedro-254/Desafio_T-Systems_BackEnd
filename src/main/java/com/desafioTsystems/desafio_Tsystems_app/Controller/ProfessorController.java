@@ -13,6 +13,7 @@ import com.desafioTsystems.desafio_Tsystems_app.Service.AddressService;
 import com.desafioTsystems.desafio_Tsystems_app.Service.ProfessorService;
 import com.desafioTsystems.desafio_Tsystems_app.Service.StudentService;
 import com.desafioTsystems.desafio_Tsystems_app.dto.CadastrarRequestDTO;
+import com.desafioTsystems.desafio_Tsystems_app.dto.DeletarRequestDTO;
 import com.desafioTsystems.desafio_Tsystems_app.dto.EditarRequestDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -95,5 +96,21 @@ public class ProfessorController {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body("Usuário já existente");
+    }
+
+    @PostMapping("/deletar")
+    public ResponseEntity<String> deletarPost(@RequestBody DeletarRequestDTO body) {
+        Optional<Professor> professor = this.professorService.findProfessor(body.email());
+
+        if (professor.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Usuário não existe");
+        } else {
+            this.professorService.deleteProfessor(professor.get());
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Usuário deletado com sucesso");
+        }
     }
 }
